@@ -1,4 +1,4 @@
-import { Box, Card, Grid2 } from "@mui/material";
+import { Box, Grid2 } from "@mui/material";
 import "./App.css";
 import Home from "./pages/Home";
 import Register from "./pages/Register";

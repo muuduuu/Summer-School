@@ -11,26 +11,40 @@ const HeroSection = () => {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      alpha: true,
+      antialias: true 
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
+    renderer.setClearColor(0x000000, 0);
     mountRef.current.appendChild(renderer.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(100, 100, 50);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3);
+    directionalLight.position.set(10, 10, 10);
     directionalLight.castShadow = true;
     scene.add(directionalLight);
 
     const loader = new GLTFLoader();
     loader.load(Sandbox, (gltf) => {
       const model = gltf.scene;
+      model.traverse((node) => {
+        if (node.isMesh) {
+          node.castShadow = true;
+          node.receiveShadow = true;
+          if (node.material) {
+            node.material.metalness = 0.2;
+            node.material.roughness = 0.7;
+          }
+        }
+      });
       scene.add(model);
       model.position.set(0, 0, 0);
       model.scale.set(2, 2, 2);
-      model.rotation.y = 30 * (Math.PI / 180); // Rotate the model 30 degrees to the right
+      model.rotation.y = 30 * (Math.PI / 180);
     });
 
     camera.position.set(0, 5, 30);
