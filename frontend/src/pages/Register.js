@@ -1,12 +1,13 @@
-// src/pages/Register.js
+
+import { Card, Typography } from '@mui/material';
 import React from 'react';
 
 const Register = () => {
   return (
-    <div className="container my-5">
-      <h1>Register/Sign Up</h1>
-      <p>Registration form will go here.</p>
-    </div>
+    <Card className="container my-5" style={{ height: '100%', padding: '20px', borderRadius: '10px', backgroundColor: 'black', color:'white' }}>
+      <Typography variant='h5'>Register/Sign Up</Typography>
+      <Typography variant='p'>Registration form will go here.</Typography>
+    </Card>
   );
 };
 
