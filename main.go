@@ -6,12 +6,14 @@ import (
 
 func main() {
 	router := gin.Default()
+	router.LoadHTMLGlob("Pages/*")
+
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
+		c.HTML(200, "index.html", gin.H{
+			"title": "Summer School",
 		})
 	})
 
-	router.Run(":8080")
+	router.Run(":8000")
 
 }
