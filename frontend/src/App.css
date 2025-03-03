@@ -3,6 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-image: url("https://webfiles.amrita.edu/2022/02/fS229Wqz-unesco-banner-01.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .logo {
