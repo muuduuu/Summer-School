@@ -1,5 +1,77 @@
 import React, { useState } from 'react';
-import { Card, Typography, FormGroup, FormFormL, FormLabel, Input, Button } from '@mui/material';
+import { 
+    Card, 
+    Typography, 
+    FormGroup, 
+    FormLabel, 
+    Input, 
+    Button,
+    createTheme,
+    ThemeProvider,
+    Box,
+    styled
+} from '@mui/material';
+
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#1a4468',
+        },
+        background: {
+            default: '#121212',
+            paper: '#1e1e1e',
+        },
+        text: {
+            primary: '#ffffff',
+            secondary: '#b3b3b3',
+        }
+    }
+});
+
+const StyledCard = styled(Card)(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+    margin: '40px auto',
+    maxWidth: '500px',
+    padding: '30px',
+    boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+    borderRadius: '12px',
+}));
+
+const StyledFormCard = styled(Card)(({ theme }) => ({
+    backgroundColor: theme.palette.background.default,
+    padding: '20px',
+    marginTop: '20px',
+    marginBottom: '20px',
+    borderRadius: '8px',
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+    marginTop: '20px',
+    padding: '10px 30px',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.text.primary,
+    '&:hover': {
+        backgroundColor: theme.palette.primary.dark,
+    },
+}));
+
+const StyledInput = styled(Input)(({ theme }) => ({
+    marginBottom: '20px',
+    color: theme.palette.text.primary,
+    '&:before': {
+        borderColor: theme.palette.text.secondary,
+    },
+    '&:after': {
+        borderColor: theme.palette.primary.main,
+    },
+}));
+
+const ErrorText = styled('p')({
+    color: '#ff6b6b',
+    margin: '4px 0 16px 0',
+    fontSize: '0.875rem',
+});
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -54,39 +126,58 @@ export default function Register() {
     };
 
     return (
-        <Card className="registration-container" style={{margin:'10px 100px 10px 100px', padding:'20px'}}>
-            <Typography variant='h6'>Register</Typography>
-            <FormGroup onSubmit={handleSubmit}>
-                <Card style={{display: 'flex', flexDirection: 'column', padding: '20px'}}>
-                    <FormLabel>Username:</FormLabel>
-                    <Input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                    />
-                    {errors.username && <p className="error">{errors.username}</p>}
-                
-                    <FormLabel>Email:</FormLabel>
-                    <Input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                    />
-                    {errors.email && <p className="error">{errors.email}</p>}
-                
-                    <FormLabel>Password:</FormLabel>
-                    <Input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                    {errors.password && <p className="error">{errors.password}</p>}
-                </Card>
-                <Button type="submit">Register</Button>
-            </FormGroup>
-        </Card>
+        <ThemeProvider theme={theme}>
+            <Box sx={{ minHeight: '100vh', backgroundColor: theme.palette.background.default, paddingTop: '20px' }}>
+                <StyledCard>
+                    <Typography variant='h4' sx={{ mb: 3, color: theme.palette.text.primary }}>
+                        Register
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                        <StyledFormCard>
+                            <FormGroup>
+                                <FormLabel sx={{ color: theme.palette.text.secondary }}>
+                                    Username
+                                </FormLabel>
+                                <StyledInput
+                                    type="text"
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                                {errors.username && <ErrorText>{errors.username}</ErrorText>}
+                            
+                                <FormLabel sx={{ color: theme.palette.text.secondary }}>
+                                    Email
+                                </FormLabel>
+                                <StyledInput
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                                {errors.email && <ErrorText>{errors.email}</ErrorText>}
+                            
+                                <FormLabel sx={{ color: theme.palette.text.secondary }}>
+                                    Password
+                                </FormLabel>
+                                <StyledInput
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                                {errors.password && <ErrorText>{errors.password}</ErrorText>}
+                            </FormGroup>
+                        </StyledFormCard>
+                        <StyledButton type="submit" variant="contained" fullWidth>
+                            Register
+                        </StyledButton>
+                    </form>
+                </StyledCard>
+            </Box>
+        </ThemeProvider>
     );
 }
