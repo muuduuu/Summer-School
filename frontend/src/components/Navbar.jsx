@@ -1,8 +1,64 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Box, useTheme, useMediaQuery } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  useTheme,
+  useMediaQuery,
+  Button,
+  styled,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import './navbar.css';
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: theme.palette.background.paper,
+  boxShadow: '0 4px 30px rgba(99, 102, 241, 0.1)',
+  borderBottom: '1px solid rgba(99, 102, 241, 0.1)',
+  height: '64px',
+}));
+
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  minHeight: '64px !important',
+  padding: theme.spacing(0, 2),
+  [theme.breakpoints.up('sm')]: {
+    padding: theme.spacing(0, 3),
+    minHeight: '64px !important',
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  textDecoration: 'none',
+  padding: '6px 16px',
+  borderRadius: '8px',
+  fontWeight: 500,
+  letterSpacing: '0.5px',
+  transition: 'all 0.2s ease',
+  '&:hover': {
+    background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%)',
+    transform: 'translateY(-1px)',
+  }
+}));
+
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  padding: '16px 24px',
+  '&:hover': {
+    background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%)',
+  },
+  '& .MuiTypography-root': {
+    fontSize: '1.1rem',
+    fontWeight: 500,
+    letterSpacing: '0.5px',
+  }
+}));
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -21,46 +77,42 @@ function Navbar() {
   ];
 
   const drawer = (
-    <List sx={{ backgroundColor: '#1a1a1a', height: '100%', color: 'white' }}>
+    <List sx={{ 
+      background: theme.palette.background.default,
+      height: '100%',
+      paddingTop: 2
+    }}>
       {menuItems.map((item) => (
-        <ListItem 
+        <StyledListItem
           button 
           key={item.text} 
           component={Link} 
           to={item.path}
           onClick={handleDrawerToggle}
-          sx={{
-            '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            },
-            padding: '20px'
-          }}
         >
-          <ListItemText 
-            primary={item.text} 
-            sx={{ 
-              textAlign: 'center',
-              '& .MuiTypography-root': {
-                fontSize: '1.2rem'
-              }
-            }} 
-          />
-        </ListItem>
+          <ListItemText primary={item.text} />
+        </StyledListItem>
       ))}
     </List>
   );
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#1a1a1a' }}>
-      <Toolbar sx={{ justifyContent: 'flex-end' }}>
+    <StyledAppBar position="sticky">
+      <StyledToolbar sx={{ justifyContent: 'flex-end' }}>
         {isMobile ? (
           <>
             <IconButton
-              color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ marginLeft: 'auto' }}
+              sx={{ 
+                marginLeft: 'auto',
+                color: theme.palette.text.primary,
+                padding: '8px',
+                '&:hover': {
+                  background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%)',
+                }
+              }}
             >
               <MenuIcon />
             </IconButton>
@@ -70,12 +122,13 @@ function Navbar() {
               open={mobileOpen}
               onClose={handleDrawerToggle}
               ModalProps={{
-                keepMounted: true, // Better mobile performance
+                keepMounted: true,
               }}
               sx={{
                 '& .MuiDrawer-paper': { 
-                  width: 240,
-                  backgroundColor: '#1a1a1a'
+                  width: 280,
+                  background: theme.palette.background.paper,
+                  borderLeft: '1px solid rgba(99, 102, 241, 0.1)',
                 },
               }}
             >
@@ -83,29 +136,20 @@ function Navbar() {
             </Drawer>
           </>
         ) : (
-          <Box sx={{ display: 'flex', gap: 4 }}>
+          <Box sx={{ display: 'flex', gap: 2 }}>
             {menuItems.map((item) => (
-              <Link
+              <StyledButton
                 key={item.text}
+                component={Link}
                 to={item.path}
-                style={{
-                  color: 'white',
-                  textDecoration: 'none',
-                  padding: '8px 16px',
-                  borderRadius: '4px',
-                  transition: 'background-color 0.3s',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  },
-                }}
               >
                 {item.text}
-              </Link>
+              </StyledButton>
             ))}
           </Box>
         )}
-      </Toolbar>
-    </AppBar>
+      </StyledToolbar>
+    </StyledAppBar>
   );
 }
 
