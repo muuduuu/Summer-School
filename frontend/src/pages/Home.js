@@ -9,7 +9,10 @@ const Home = () => {
   return (
     <Card style={{ height: '100%' , padding: '20px', borderRadius: '10px', backgroundColor:'black' }} >
       <Grid2 size={12}>
-            <Card style={{ backgroundColor: "black"}} >
+            <Card sx={{ 
+              backgroundColor: "black",
+              padding: { xs: 0, sm: '20px' }
+            }} >
               <HeroSection />
             </Card>
           </Grid2>

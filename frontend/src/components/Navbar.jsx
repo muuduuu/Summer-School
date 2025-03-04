@@ -1,69 +1,111 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Box, useTheme, useMediaQuery } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import './navbar.css';
 
 function Navbar() {
-  const [click, setClick] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  const menuItems = [
+    { text: 'Home', path: '/' },
+    { text: 'Register', path: '/Register' },
+    { text: 'About Us', path: '/About' },
+    { text: 'Sign In', path: '/signin' },
+  ];
 
-
-
+  const drawer = (
+    <List sx={{ backgroundColor: '#1a1a1a', height: '100%', color: 'white' }}>
+      {menuItems.map((item) => (
+        <ListItem 
+          button 
+          key={item.text} 
+          component={Link} 
+          to={item.path}
+          onClick={handleDrawerToggle}
+          sx={{
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            },
+            padding: '20px'
+          }}
+        >
+          <ListItemText 
+            primary={item.text} 
+            sx={{ 
+              textAlign: 'center',
+              '& .MuiTypography-root': {
+                fontSize: '1.2rem'
+              }
+            }} 
+          />
+        </ListItem>
+      ))}
+    </List>
+  );
 
   return (
-    <>
-      <nav className='navbar'>
-        <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-          {/* <img src=logo
-            alt='logo'
-            className='logo'
-
-            /> */}
-          </Link>
-          <div className='menu-icon' onClick={handleClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className='nav-item'>
+    <AppBar position="sticky" sx={{ backgroundColor: '#1a1a1a' }}>
+      <Toolbar sx={{ justifyContent: 'flex-end' }}>
+        {isMobile ? (
+          <>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ marginLeft: 'auto' }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              variant="temporary"
+              anchor="right"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better mobile performance
+              }}
+              sx={{
+                '& .MuiDrawer-paper': { 
+                  width: 240,
+                  backgroundColor: '#1a1a1a'
+                },
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </>
+        ) : (
+          <Box sx={{ display: 'flex', gap: 4 }}>
+            {menuItems.map((item) => (
               <Link
-                to='/Register'
-                className='nav-links'
-                onClick={closeMobileMenu}
+                key={item.text}
+                to={item.path}
+                style={{
+                  color: 'white',
+                  textDecoration: 'none',
+                  padding: '8px 16px',
+                  borderRadius: '4px',
+                  transition: 'background-color 0.3s',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                }}
               >
-                Register
+                {item.text}
               </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                to='/About'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                About Us
-              </Link>
-            </li>
-
-            <li className='nav-item'>
-              <Link
-                to='/signin'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                Sign In
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </>
+            ))}
+          </Box>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 }
 

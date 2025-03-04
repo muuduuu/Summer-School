@@ -91,7 +91,12 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <Box sx={{ width: '100%', height: '100vh', position: 'relative' }}>
+    <Box sx={{ 
+      width: '100%', 
+      height: { xs: 'calc(100vh - 0px)', sm: '100vh' }, 
+      position: 'relative',
+      padding: { xs: 0, sm: 2 }
+    }}>
       <div ref={mountRef} style={{ width: '100%', height: '100%', position: 'absolute' }} />
       <Box sx={{
         position: 'absolute',
