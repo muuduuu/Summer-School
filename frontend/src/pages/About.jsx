@@ -44,7 +44,7 @@ const About = () => {
             variant="h2" 
             component="h1" 
             gutterBottom
-            sx={{ fontWeight: 'bold' }}
+            sx={{ fontWeight: 'bold', color: 'text.primary' }}
           >
             About Our Summer School
           </Typography>
@@ -68,13 +68,13 @@ const About = () => {
             </Grid2>
             <Grid2 item xs={12} md={6}>
               <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium' }}>
+                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', color: 'text.primary' }}>
                   Our Mission
                 </Typography>
-                <Typography variant="body1" paragraph>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                   Suspendisse in orci enim. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.
                 </Typography>
               </Box>
@@ -84,7 +84,7 @@ const About = () => {
 
         {/* Values Section */}
         <Box mb={10} textAlign="center">
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', mb: 4 }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', mb: 4 ,color: 'text.primary' }}>
             Our Values
           </Typography>
           
@@ -92,7 +92,7 @@ const About = () => {
             <Grid2 item xs={12} md={4}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
                 <SchoolIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ color: 'text.secondary' }}>
                   Academic Excellence
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
@@ -129,23 +129,23 @@ const About = () => {
 
         {/* History Section */}
         <Box mb={10}>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', mb: 4, textAlign: 'center' }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', mb: 4, textAlign: 'center', color: 'text.primary' }}>
             Our History
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse in orci enim. Vivamus hendrerit arcu sed erat molestie vehicula.
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
             Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse in orci enim. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. 
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
             Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse in orci enim. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse in orci enim.
           </Typography>
         </Box>
 
         {/* Team Section */}
         <Box mb={10}>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', mb: 4, textAlign: 'center' }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'medium', mb: 4, textAlign: 'center', color: 'text.primary' }}>
             Meet Our Team
           </Typography>
           <Grid2 container spacing={4}>
