@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignIn from "./pages/SignIn";
+import Footer from "./components/Footer";
 
 function App() {
   const Name = localStorage.getItem("token");
@@ -26,6 +27,7 @@ function App() {
             </Grid2>
           </Grid2>
         </BrowserRouter>
+        <Footer />
       </Box>
   );
 }
