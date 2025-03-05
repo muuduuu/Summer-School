@@ -90,13 +90,12 @@ func init() {
 	os.MkdirAll("uploads", os.ModePerm)
 }
 
-// Function to hash passwords
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
 
-// Function to compare passwords
+
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
