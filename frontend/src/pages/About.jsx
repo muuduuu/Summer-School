@@ -46,18 +46,56 @@ const About = () => {
             gutterBottom
             sx={{ fontWeight: 'bold', color: 'text.primary' }}
           >
-            About Our Summer School
+            About
           </Typography>
           <Divider sx={{ my: 3, mx: 'auto', width: '10%', borderColor: 'primary.main', borderWidth: 2 }} />
-          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
+          <Typography variant="h5" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
             Transforming education through innovative summer learning experiences
           </Typography>
+          
+          <Grid2 item xs={12} md={6}>
+              <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <br></br>
+                <Typography variant="h5" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
+                Amrita Vishwa Vidyapeetham
+                </Typography>
+                <Divider sx={{ my: 1, mx: 'auto', width: '30%', borderColor: 'primary.main', borderWidth: 2 }} />
+                <CardMedia
+                component="img"
+                height="400"
+                image= "assets/images/amrita.jpg"
+                alt="Amrita Vishwa Vidyapeetham, Amritapuri"
+                sx={{ borderRadius: 2 }}
+              />
+                <Typography  gutterBottom sx={{ color: 'text.primary',justifyContent: 'center' }}>
+                Amrita Vishwa Vidyapeetham is a multi-disciplinary, research-intensive, private university, educating a vibrant student population of over 24,000 by 1700+ strong faculty. Accredited with the highest possible ‘A++’ grade by NAAC, Amrita offers more than 250 UG, PG, and Ph.D. programs in Engineering, Management, and Medical Sciences including Ayurveda, Life Sciences, Physical Sciences, Agriculture Sciences, Arts & Humanities, and Social & Behavioral Sciences.
+                <br></br>
+                With its extensive network of nine campuses spread across Amaravati, Amritapuri, Bengaluru, Chennai, Coimbatore, Kochi, Mysuru and NCR Delhi (Faridabad), Amrita Vishwa Vidyapeetham stands as one of India’s preeminent private educational institutions. Encompassing an expansive area of over 1200 acres, these campuses offer an impressive built-up space of more than 100 lakh square feet. Renowned for its commitment to academic excellence, Amrita University consistently ranks among the top-tier private universities in the nation, solidifying its reputation as a beacon of quality education.
+                </Typography>
+                <br></br>
+                <Typography variant="h5" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
+                ACM Student Chapter
+                </Typography>
+                <Divider sx={{ my: 1, mx: 'auto', width: '20%', borderColor: 'primary.main', borderWidth: 2 }} />
+                <CardMedia
+                component="img"
+                height="400"
+                image= "assets/images/amrita.jpg"
+                alt="ACM Student Chapter, Amritapuri"
+                sx={{ borderRadius: 2 }}
+              />
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                We are a group of computer science enthusiasts promoting self-education and group-based learning through Student Interest Groups (SIGs) focused on topics such as AI, Cybersecurity, Game Dev, Competitive Programming, Blockchain Dev and more.
+                </Typography>
+              </Box>
+            </Grid2>
         </Box>
 
         {/* Mission Section */}
         <Box mb={10}>
           <Grid2 container spacing={4}>
             <Grid2 item xs={12} md={6}>
+              
               <CardMedia
                 component="img"
                 height="400"
@@ -90,7 +128,7 @@ const About = () => {
           
           <Grid2 container spacing={4}>
             <Grid2 item xs={12} md={4}>
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', p: 5 }}>
                 <SchoolIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h5" gutterBottom sx={{ color: 'text.secondary' }}>
                   Academic Excellence
