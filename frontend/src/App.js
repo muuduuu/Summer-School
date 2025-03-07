@@ -10,6 +10,8 @@ import SignIn from "./pages/SignIn";
 import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from './pages/About';
+import UserDashboard from './pages/UserDashboard'; 
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   const Name = localStorage.getItem("token");
@@ -25,6 +27,8 @@ function App() {
                 <Route path="/Register" element={<Register />} />
                 <Route path="/SignIn" element={<SignIn />} />
                 <Route path="/About" element={<About />} />
+                <Route path="/UserDashboard" element={<UserDashboard />} /> {/* New */}
+                <Route path="/AdminDashboard" element={<AdminDashboard />} /> {/* New */}
               </Routes>
             </Grid2>
           </Grid2>
