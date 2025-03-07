@@ -44,7 +44,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%)',
     transform: 'translateY(-1px)',
-  }
+  },
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -57,30 +57,39 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
     fontSize: '1.1rem',
     fontWeight: 500,
     letterSpacing: '0.5px',
-  }
+  },
 }));
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isLoggedIn = !!localStorage.getItem("token"); // Check login status
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const menuItems = [
-    { text: 'Home', path: '/' },
-    { text: 'Register', path: '/Register' },
-    { text: 'About Us', path: '/About' },
-    { text: 'Sign In', path: '/signin' },
-  ];
+  // Dynamic menu items based on login status
+  const menuItems = isLoggedIn
+    ? [
+        { text: 'Home', path: '/' },
+        { text: 'About Us', path: '/About' },
+        { text: 'User Dashboard', path: '/UserDashboard' },
+        { text: 'Admin Dashboard', path: '/AdminDashboard' },
+      ]
+    : [
+        { text: 'Home', path: '/' },
+        { text: 'Register', path: '/Register' },
+        { text: 'About Us', path: '/About' },
+        { text: 'Sign In', path: '/SignIn' }, // Fixed case to match App.js
+      ];
 
   const drawer = (
     <List sx={{ 
       background: theme.palette.background.default,
       height: '100%',
-      paddingTop: 2
+      paddingTop: 2,
     }}>
       {menuItems.map((item) => (
         <StyledListItem
@@ -111,7 +120,7 @@ function Navbar() {
                 padding: '8px',
                 '&:hover': {
                   background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%)',
-                }
+                },
               }}
             >
               <MenuIcon />

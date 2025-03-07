@@ -17,8 +17,7 @@ export default function AboutEvent() {
               Event Overview
             </Typography>
             <Typography variant="body1" sx={{ mt: 1.5, color: theme.palette.text.secondary }}>
-              Learn about the latest trends in our industry at our annual conference. Join us for a day of insightful talks,
-              networking opportunities, and interactive sessions with industry leaders from around the globe.
+              ACM Summer School aims to introduce coding culture amongst school students and cultivate their interest in computer science. The main vision is to promote innovation through technical skill building.
             </Typography>
           </CardContent>
         </Card>
@@ -32,9 +31,9 @@ export default function AboutEvent() {
               This year's lineup includes:
             </Typography>
             <ul>
-              <li>Dr. Jane Smith - Leading expert in renewable energy solutions.</li>
-              <li>John Doe - Renowned software development strategist.</li>
-              <li>Emily Roe - Innovator in workplace diversity and inclusion.</li>
+              <li>To Be Revealed</li>
+              <li>To Be Revealed</li>
+              <li>To Be Revealed</li>
             </ul>
           </CardContent>
         </Card>
