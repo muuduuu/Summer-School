@@ -2,35 +2,28 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"time"
+
+	"Summer-School/database"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+// Secret key for JWT
 var jwtKey = []byte("my_secret_key")
 
-type User struct {
-	ID        uint `gorm:"primarykey"`
-	CreatedAt time.Time
-	UpdatedAT time.Time
-	Name      string
-	Email     string
-	Password  string
-}
+// JWT Claims struct
 type Claims struct {
 	UserID uint   `json:"user_id"`
 	Email  string `json:"email"`
 	jwt.StandardClaims
 }
 
-func GenerateJWT(user User) (string, error) {
+// Generate JWT token
+func GenerateJWT(user database.User) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
 		UserID: user.ID,
@@ -41,18 +34,6 @@ func GenerateJWT(user User) (string, error) {
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(jwtKey)
-
-}
-
-func ConnectDatabase() {
-	dsn := "host=127.0.0.1 port=5432 dbname=postgres user=postgres password= connect_timeout=10 sslmode=prefer"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal("Failed to connect to PostgreSQL database:", err)
-	}
-	DB = db
-	db.AutoMigrate(&User{})
-	fmt.Println("PostgreSQL database connection successful and table is ready!")
 }
 
 func hashPassword(password string) (string, error) {
@@ -75,7 +56,6 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		claims := &Claims{}
-
 		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 			return jwtKey, nil
 		})
@@ -93,10 +73,24 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
+func setupCORS() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	}
+}
+
 func main() {
-	ConnectDatabase()
+	database.ConnectDatabase()
 
 	router := gin.Default()
+	router.Use(setupCORS()) // Apply CORS middleware
 
 	router.GET("/api/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello from the other side!"})
@@ -113,23 +107,28 @@ func main() {
 			return
 		}
 
+		// Log received request
+		fmt.Println("Received request:", input)
+
 		hashedPassword, err := hashPassword(input.Password)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error hashing password"})
 			return
 		}
 
-		user := User{
+		user := database.User{
 			Name:     input.Name,
 			Email:    input.Email,
 			Password: hashedPassword,
 		}
-		if err := DB.Create(&user).Error; err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+
+		if err := database.DB.Create(&user).Error; err != nil {
+			fmt.Println("Database error:", err) // Log DB error
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error", "details": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"message": "Registration successful", "user": user})
 
+		c.JSON(http.StatusOK, gin.H{"message": "Registration successful", "user": user})
 	})
 
 	router.POST("/api/login", func(c *gin.Context) {
@@ -142,8 +141,8 @@ func main() {
 			return
 		}
 
-		var user User
-		if err := DB.Where("email = ?", input.Email).First(&user).Error; err != nil {
+		var user database.User
+		if err := database.DB.Where("email = ?", input.Email).First(&user).Error; err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email or password"})
 			return
 		}
@@ -171,8 +170,8 @@ func main() {
 			return
 		}
 
-		var user User
-		if err := DB.First(&user, userID).Error; err != nil {
+		var user database.User
+		if err := database.DB.First(&user, userID).Error; err != nil {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
 		}
@@ -181,5 +180,4 @@ func main() {
 	})
 
 	router.Run(":8000")
-
 }
